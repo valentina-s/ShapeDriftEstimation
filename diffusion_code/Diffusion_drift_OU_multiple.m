@@ -1,4 +1,4 @@
-function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU_multiple(bdryPts,ctrlPts,bdryPts_T1,bdryPts_T2,im,sig_0,sig,theta1,theta2,dt,T)
+function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU_multiple(bdryPts,ctrlPts,bdryPts_T1,bdryPts_T2,im,sig_0,sig,theta,dt,T)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(bdryPts,ctrlPts,meanArea,meanLength,delta_1,delta_2,sig_0,sig,dt,T)
@@ -30,6 +30,9 @@ ctrlPts_t = zeros(nofCtrlPts,2,N+1);
 ctrlPts_t(:,:,1) = ctrlPts;
 
 alpha_t = zeros(nofCtrlPts,2,N);
+
+theta1 = theta(1);
+theta2 = theta(2);
 
 
 % figure(1)

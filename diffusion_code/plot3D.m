@@ -1,4 +1,19 @@
-function pts = plot3D(bdryPts,ctrlPts,dt)
+function pts = plot3D(bdryPts,ctrlPts,dt,moviename)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% plot3D(bdryPts,ctrlPts,dt,moviename)
+%
+% INPUT:
+%   bdryPts
+%   ctrlPts
+%   dt
+%   moviename - if moviename is not provided no movie is saved
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
 N = size(bdryPts,3);
 nofBdryPts = size(bdryPts,1);
 nofCtrlPts = size(ctrlPts,1);
@@ -9,7 +24,12 @@ hold off
 
 
 % variable to determine whether to create a movie
-create_movie = true;
+create_movie = false;
+if (nargin>3)
+    create_movie = true;
+end
+
+
 if create_movie
   mov(1:N) = struct('cdata', [],'colormap', []);
 end
@@ -64,12 +84,14 @@ end
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+if false
 set(h1,'Color','k', 'Linewidth',2);
 a = [0:0.1:2*pi+0.1];
 ellipse_lr = [10*sin(a)' 5*cos(a)'] + 30;
 ellipse_ud = [5*sin(a)' 10*cos(a)'] + 30;
 plot3(30.1*ones(64,1),1.5*ellipse_ud(:,1),1.5*ellipse_ud(:,2),'Linewidth',2)
 plot3(30.1*ones(64,1),1.5*ellipse_lr(:,1),1.5*ellipse_lr(:,2),'Linewidth',2)
+end
 
 mov(i) = getframe(gcf);
 
@@ -90,5 +112,5 @@ mov(i) = getframe(gcf);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if create_movie
-    movie2avi(mov, 'myMoview.avi', 'compression', 'None','FPS',120,'quality',100);
+    movie2avi(mov, moviename, 'compression', 'None','FPS',120,'quality',100);
 end

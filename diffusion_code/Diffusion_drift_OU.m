@@ -1,19 +1,23 @@
 function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU(bdryPts,ctrlPts,bdryPts_T,im,sig_0,sig,theta,dt,T)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(bdryPts,ctrlPts,meanArea,meanLength,delta_1,delta_2,sig_0,sig,dt,T)
+% function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU(bdryPts,ctrlPts,bdryPts_T,im,sig_0,sig,theta,dt,T)
 %
-% Diffusion_drift_LA is a function which evolves a shape according to a Langevin-type diffusion process.
-% In this version the potential function U(shape) consist of two terms:
-% U_1 = \delta_1*(length(shape) - length(template))^2
-% U_2 = \delta_2*(area(shape) - area(template))^2,
-% and its gradient is included as a drift term. 
+% Diffusion_drift_OU is a function which generates a diffusion with
+% Ornstein-Uhlenbeck drift: i.e. a gradient of the distance to some fixed
+% shape.
+% theta \nabla dist(shape - mean_shape). 
 %
-%
-% x0 - the initial configuration of the landmarks
-% drift - contains the coefficients of the
+% INPUTS:
+% bdryPts
+% ctrlPts
+% bdryPts_T - template shape
+% im - background image
 % sig_0 - the deformation kernel width
 % sig - the covariance kernel width
+% theta
+% dt
+% T
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
