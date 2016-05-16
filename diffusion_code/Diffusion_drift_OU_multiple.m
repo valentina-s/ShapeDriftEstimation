@@ -52,8 +52,6 @@ for i = 1:N
     K_bdry = K_matrix(bdryPts_t(:,:,i),ctrlPts_t(:,:,i),sig_0^2);
     K_ctrl = K_matrix(ctrlPts_t(:,:,i),ctrlPts_t(:,:,i),sig_0^2);
    
-
-
     % calculate drift term with respect to the distance function
     g1 = gradU(bdryPts_t(:,:,i),bdryPts_T1,im);
     % projecting the gradient

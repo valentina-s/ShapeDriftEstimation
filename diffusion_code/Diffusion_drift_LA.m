@@ -1,7 +1,7 @@
-function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(bdryPts,ctrlPts,meanArea,meanLength,delta_1,delta_2,sig_0,sig,dt,T)
+function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(bdryPts,ctrlPts,meanArea,meanLength,theta,sig_0,sig,dt,T)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(bdryPts,ctrlPts,meanArea,meanLength,delta_1,delta_2,sig_0,sig,dt,T)
+% function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(bdryPts,ctrlPts,meanArea,meanLength,theta,sig_0,sig,dt,T)
 %
 % Diffusion_drift_LA is a function which evolves a shape according to a Langevin-type diffusion process.
 % In this version the potential function U(shape) consist of two terms:
@@ -9,8 +9,7 @@ function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(bdryPts,ctrlPts,mean
 % U_2 = \delta_2*(area(shape) - area(template))^2,
 % and its gradient is included as a drift term. 
 %
-% delta_1 - area coefficient
-% delta_2 - length coefficient
+% theta = [area coefficient length coefficient]
 %
 % x0 - the initial configuration of the landmarks
 % drift - contains the coefficients of the
@@ -18,6 +17,10 @@ function [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(bdryPts,ctrlPts,mean
 % sig - the covariance kernel width
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% extracting the coefficients
+delta_1 = theta(1); % area coefficient 
+delta_2 = theta(2); % length coefficient
 
 % this parameter determines whether to plot the contours
 plotting = false;

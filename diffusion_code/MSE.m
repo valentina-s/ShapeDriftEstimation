@@ -1,5 +1,30 @@
-function [mse theta_hat] = MSE(drift_type,theta, dt, T,sampleSize)
-% estimate the MSE of the likelihood ratio estimator
+function [mse theta_hat] = MSE(drift_type,theta,dt,T,sampleSize)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% [mse theta_hat] = MSE(drift_type,theta,dt,T,sampleSize)
+% 
+% calculate MSE of the likelihood ratio estimator
+% 
+% INPUTS:
+%   drift_type - a string indicating the type of the drift
+%               'constant', 'OU', 'LA'
+%   theta      - the coefficients with which to simulate the diffusions
+%                1D for 'constant'
+%                1D for 'OU'
+%                2D for 'LA'
+%   dt         - time step
+%   T          - final time
+%   sampleSize - number of paths
+%
+%
+% OUTPUTS:
+%   mse        - mse value
+%   theta_hat  - the estimated values of theta - cell of size sampleSize
+%                each entry containing the theta estimate at each time
+%                sizeOfTheta x # time steps
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % initializing variables
 total = 0;
@@ -57,8 +82,9 @@ parfor k=1:sampleSize
         err(k,1) = sum(sum((theta_hat{k}(end) - theta).^2));
   
     case 'LA'
-        [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(x,x_small,800,100,theta(1),theta(2),10,10,dt,T);
+        [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(x,x_small,800,100,theta,10,10,dt,T);
         theta_hat{k} = drift_LA_estimate(bdryPts_t,ctrlPts_t,800,100,alpha_t,dt,10);
+        disp(size(theta_hat{k}))
         err(k,1) = sum(sum((theta_hat{k}(:,end) - theta).^2));
     end    
 %     
