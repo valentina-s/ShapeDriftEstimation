@@ -72,19 +72,18 @@ parfor k=1:sampleSize
   
     case 'constant'
         [bdryPts_t ctrlPts_t alpha_t] = Diffusion(x,x_small,theta,10,dt,T);
-        theta_hat{k} = drift_estimate(ctrlPts_t,alpha_t,dt,10);
+        theta_hat{k} = drift_estimate(ctrlPts_t,alpha_t,dt,T);
         err(k,1) = sum(sum((theta_hat{k}(:,:,end) - theta).^2));
         
 
     case 'OU'
         [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU(1.5*ellipse_lr,1.5*ellipse_lr(1:5:end-4,:),1.5*dumbbell,zeros(100,100),10,10,theta,dt,T);
-        theta_hat{k} = drift_OU_estimate(bdryPts_t,ctrlPts_t,1.5*dumbbell,alpha_t,dt,10);
+        theta_hat{k} = drift_OU_estimate(bdryPts_t,ctrlPts_t,1.5*dumbbell,alpha_t,dt,T);
         err(k,1) = sum(sum((theta_hat{k}(end) - theta).^2));
   
     case 'LA'
-        [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(x,x_small,800,100,theta,10,10,dt,T);
-        theta_hat{k} = drift_LA_estimate(bdryPts_t,ctrlPts_t,800,100,alpha_t,dt,10);
-        disp(size(theta_hat{k}))
+        [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(x,x_small,pi*100,2*pi*10,theta,10,10,dt,T);
+        theta_hat{k} = drift_LA_estimate(bdryPts_t,ctrlPts_t,pi*100,2*pi*10,alpha_t,dt,T);
         err(k,1) = sum(sum((theta_hat{k}(:,end) - theta).^2));
     end    
 %     

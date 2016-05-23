@@ -60,10 +60,10 @@ pause(5)
 % first run does not show the current state
 
 
-%theta_LA = [0.5 0.6];
+%theta_LA = [0.5; 0.6];
 %[bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(x,x_small,800,100,theta_LA,10,10,dt,T);
 
-theta_LA = [0.1 0.05];
+theta_LA = [0.1; 0.05]; %[area_coef; length_coef]
 [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_LA(x,x_small,pi*100,2*pi*10,theta_LA,10,10,0.01,30);
 plot3D(bdryPts_t,ctrlPts_t,0.01)
 pause(5)
@@ -124,15 +124,31 @@ hold off
 
 
 % 3) LA
+ 
+% Note: initial value is a huge negative or positive number:
+% is the matrix signular?
+% this is why I am not displaying the firs value in the plot (2:end)
 
-[mse_LA theta_hat_LA] = MSE('LA',theta_LA,0.05,30,4);
+[mse_LA theta_hat_LA] = MSE('LA',theta_LA,0.01,30,100);
 
 theta_hat_transformed = cat(4,theta_hat_LA{:});
 figure(3)
-plot(squeeze(theta_hat_transformed(1,:,:)))
+subplot(2,1,1)
+plot(squeeze(theta_hat_transformed(2,2:end,:)))
 
 hold on
-plot(1:600,theta_LA,'r.','LineWidth',3)
-title('LA Drift')
+plot(1:size(theta_LA,1),theta_LA(1),'r.','LineWidth',3)
+title('Area Coefficient')
 hold off
+
+subplot(2,1,2)
+
+plot(squeeze(theta_hat_transformed(2,2:end,:)))
+
+hold on
+plot(1:size(theta_LA,1),theta_LA(2),'r.','LineWidth',3)
+title('Length Coefficient')
+hold off
+
+
 
