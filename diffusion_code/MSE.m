@@ -72,7 +72,8 @@ parfor k=1:sampleSize
   
     case 'constant'
         [bdryPts_t ctrlPts_t alpha_t] = Diffusion(x,x_small,theta,10,dt,T);
-        theta_hat{k} = drift_estimate(ctrlPts_t,alpha_t,dt,T);
+        % using approximate alphas
+        theta_hat{k} = drift_estimate(ctrlPts_t,[],dt,T);
         err(k,1) = sum(sum((theta_hat{k}(:,:,end) - theta).^2));
         
 

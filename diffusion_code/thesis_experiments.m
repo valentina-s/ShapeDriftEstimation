@@ -36,8 +36,9 @@ pause(5)
 % Notes: make it more drifty
 
 theta_constant = 0.1*randn(size(x_small));
-[bdryPts_t, ctrlPts_t] = Diffusion(x,x_small,theta_constant,10,0.05,30);
-plot3D(bdryPts_t,ctrlPts_t,0.05)
+theta_constant = 0.5*ones(size(x_small));
+[bdryPts_t, ctrlPts_t] = Diffusion(x,x_small,theta_constant,10,0.01,10);
+plot3D(bdryPts_t,ctrlPts_t,0.01)
 pause(5)
 view(3)
 pause(5)
@@ -95,17 +96,24 @@ pause(5)
 
 % 1) Constant
 
-[mse theta_hat] = MSE('constant',theta_constant,0.05,30,100);
+theta_constant = 0.5*ones(size(x_small));
+
+
+
+[mse theta_hat] = MSE('constant',theta_constant,0.01,10,100);
 
 theta_hat_transformed = cat(4,theta_hat{:});
 
 figure(1)
-plot(squeeze(theta_hat_transformed(1,1,:,:)))
+plot(0.01:0.01:10,squeeze(theta_hat_transformed(1,1,:,:)))
 
 hold on
-plot(1:600,squeeze(theta_constant(1,1,:)),'r.','LineWidth',3)
+plot(0.01:0.01:10,squeeze(theta_constant(1,1,:)),'r.','LineWidth',3)
 title('Constant Drift MSE (estimates for one coordinate)')
 hold off
+
+theta_constant
+mean(theta_hat_transformed(:,:,end,:),4)
 
 
 
@@ -121,6 +129,9 @@ hold on
 plot(1:600,theta_OU,'r.','LineWidth',3)
 title('OU Drift')
 hold off
+
+disp(sprintf('The theta is %d.',theta_OU))
+disp(sprintf('The estimated theta is %d.',mean(theta_hat_transformed(end,:,:),3)))
 
 
 % 3) LA
@@ -149,6 +160,10 @@ hold on
 plot(1:size(theta_LA,1),theta_LA(2),'r.','LineWidth',3)
 title('Length Coefficient')
 hold off
+
+disp(sprintf('The theta is %d.',theta_OU))
+disp(sprintf('The estimated theta is %d.',mean(theta_hat_transformed(end,:,:),3)))
+
 
 
 

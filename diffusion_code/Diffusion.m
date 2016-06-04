@@ -5,9 +5,12 @@ function [bdryPts_t ctrlPts_t alpha_t] = Diffusion(bdryPts,ctrlPts,alpha_drift,s
 %
 % [bdryPts_t ctrlPts_t alpha_t] = Diffusion(bdryPts,ctrlPts,alpha_drift,sigma,dt,T)
 %
-% x0 - the initial configuration of the landmarks
-% drift - contains the coefficients of the
-% sigma - the deformation kernel width
+% INPUTS:
+% 
+%   bdryPts - initial configuration of the boundary points
+%   ctrlPts - initial configuration of the control points
+%   alpha_drift - 
+%   sigma - the deformation kernel size
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,11 +44,16 @@ for i = 1:N
 
     % generate a random tangent vector at x
     K = K_matrix(ctrlPts_t(:,:,i),ctrlPts_t(:,:,i),sigma*sigma);
-    % K = eye(size(K));
-    alpha_t(:,:,i) = dt*alpha_drift + sqrt(dt)*inv(sqrtm(K))*randn(size(alpha_drift));
+    K = eye(size(K));
+    R  = chol(K)/K;
+    
+    % alpha_t(:,:,i) = dt*alpha_drift + sqrt(dt)*sqrtm(K)\randn(size(alpha_drift));
+    alpha_t(:,:,i) = dt*alpha_drift + sqrt(dt)*R'*randn(size(alpha_drift));
     % move along the exponential map
-    bdryPts_t(:,:,i+1) = exponentialR(bdryPts_t(:,:,i),ctrlPts_t(:,:,i),alpha_t(:,:,i),sigma,1,1);
-    ctrlPts_t(:,:,i+1) = exponentialR(ctrlPts_t(:,:,i),ctrlPts_t(:,:,i),alpha_t(:,:,i),sigma,1,1);
+    
+    % move along the exponential map
+    bdryPts_t(:,:,i+1) = exponentialR(bdryPts_t(:,:,i),ctrlPts_t(:,:,i),alpha_t(:,:,i),sigma,0.1,10);
+    ctrlPts_t(:,:,i+1) = exponentialR(ctrlPts_t(:,:,i),ctrlPts_t(:,:,i),alpha_t(:,:,i),sigma,0.1,10);
 
 
     if plotting
