@@ -37,8 +37,8 @@ pause(5)
 
 theta_constant = 0.1*randn(size(x_small));
 theta_constant = 0.5*ones(size(x_small));
-[bdryPts_t, ctrlPts_t] = Diffusion(x,x_small,theta_constant,10,0.01,10);
-plot3D(bdryPts_t,ctrlPts_t,0.01)
+[bdryPts_t, ctrlPts_t] = Diffusion(x,x_small,theta_constant,10,0.001,30);
+plot3D(bdryPts_t,ctrlPts_t,0.001)
 pause(5)
 view(3)
 pause(5)
