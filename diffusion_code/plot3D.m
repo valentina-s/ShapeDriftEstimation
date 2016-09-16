@@ -17,7 +17,7 @@ function pts = plot3D(bdryPts,ctrlPts,dt,moviename)
 N = size(bdryPts,3);
 nofBdryPts = size(bdryPts,1);
 nofCtrlPts = size(ctrlPts,1);
-c = jet(N)
+c = jet(N);
 
 figure(1)
 hold off
@@ -35,8 +35,6 @@ if create_movie
 end
 
 
-
-T = [0:dt:N/dt];
 pts = zeros(N*nofBdryPts,3);
 for i=1:N
     pts((i-1)*nofBdryPts+1:i*nofBdryPts,:) = [bdryPts(:,:,i) dt*i*ones(nofBdryPts,1)];
@@ -48,7 +46,8 @@ for i=1:N
     
 
 
-    h1 = plot3(temp(:,3),temp(:,1),temp(:,2),'Color','k','Linewidth',3);
+    h1 = plot3(temp(:,3),temp(:,1),temp(:,2),'Color','k','Linewidth',3, 'LineSmoothing','off');
+    xlabel('Time')
     view(45,30)
     a = axis;
     a(2) = 40;
@@ -60,10 +59,10 @@ for i=1:N
     % axis(a)
 
     hold on
-    h2 = plot3(temp1(:,3),temp1(:,1),temp1(:,2),'o','Linewidth',2,'MarkerFaceColor','k','MarkerEdgeColor','k');
+    h2 = plot3(temp1(:,3),temp1(:,1),temp1(:,2),'o','Linewidth',2,'MarkerFaceColor','k','MarkerEdgeColor','k','LineSmoothing','off');
  
-    set(gca,'ytick',[])
-    set(gca,'ztick',[])
+    % set(gca,'ytick',[])
+    % set(gca,'ztick',[])
 
 
 

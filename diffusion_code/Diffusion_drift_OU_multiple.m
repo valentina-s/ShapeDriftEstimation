@@ -57,7 +57,7 @@ for i = 1:N
     % projecting the gradient
     g1  = K_bdry'*g1;
 
-    % obtaining the corresponging momentum
+    % obtaining the corresponding momentum
     galpha1 = K_ctrl\g1;
 
     % calculate drift term with respect to the distance function
@@ -65,7 +65,7 @@ for i = 1:N
     % projecting the gradient
     g2  = K_bdry'*g2;
 
-    % obtaining the corresponging momentum
+    % obtaining the corresponding momentum
     galpha2 = K_ctrl\g2;
     
 
