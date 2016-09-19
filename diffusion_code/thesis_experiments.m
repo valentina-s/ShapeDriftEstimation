@@ -20,7 +20,7 @@ results_path = '../diffusion_results/';
 
 % circle
 a = [0:0.1:2*pi];
-x = 10*[cos(a)' sin(a)'] + 30;
+x = 10*[sin(a)' cos(a)'] + 30;
 x_small = x(1:7:end,:);
 
 % ellipse
@@ -71,7 +71,8 @@ s = RandStream('mt19937ar','Seed',1);
 RandStream.setGlobalStream(s);
 
 
-dt = 0.001;
+% dt = 0.001;
+dt = 0.001; % in estimation it is 0.01
 T = 30;
 
 % theta_constant = 0.1*randn(size(x_small));
@@ -186,7 +187,9 @@ dt = 0.01;
 
 % [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU_multiple(x,x_small, ellipse_lr,ellipse_ud,zeros(100,100),10,10,[0.05 0.05],dt,T);
 % [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU_multiple(x,x_small, ellipse_lr,ellipse_ud,zeros(100,100),10,10,[0.5 0.5],dt;,T);
-[bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU_multiple(1.5*x,1.5*x_small, 1.5*ellipse_lr,1.5*ellipse_ud,zeros(100,100),10,10,[0.05 0.05],dt,T);
+% [bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU_multiple(1.5*x,1.5*x_small, 1.5*ellipse_lr,1.5*ellipse_ud,zeros(100,100),10,10,[0.05 0.05],dt,T);
+[bdryPts_t ctrlPts_t alpha_t] = Diffusion_drift_OU_multiple(x+15,x_small+15, 1.5*ellipse_lr,1.5*ellipse_ud,zeros(100,100),10,10,[0.5 0.5],dt,T);
+
 
 plot3D(bdryPts_t,ctrlPts_t,dt)
 title('Regression-like Ornstein-Uhlenbeck Drift','FontSize',14, 'fontweight','bold')
