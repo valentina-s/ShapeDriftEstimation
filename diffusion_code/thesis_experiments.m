@@ -72,7 +72,7 @@ RandStream.setGlobalStream(s);
 
 
 % dt = 0.001;
-dt = 0.001; % in estimation it is 0.01
+dt = 0.01; % in estimation it is 0.01
 T = 30;
 
 % theta_constant = 0.1*randn(size(x_small));
