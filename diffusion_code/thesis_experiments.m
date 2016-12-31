@@ -265,7 +265,7 @@ quantiles = [0.01,0.99, 0.05, 0.95,0.25,0.75];
 bounds = abs(quantile(squeeze(theta_hat_transformed(1,1,:,:))',quantiles) - theta_constant(1,1));
 [l,p] = boundedline(xaxis,repmat(theta_constant(1,1)*ones(size(xaxis))',length(quantiles)/2,1), reshape(bounds',[length(xaxis),2,length(quantiles)/2]),'cmap',cool(length(quantiles)/2));
 outlinebounds(l,p);
-title(sprintf('Constant Drift MLE Quantile (estimates for one coordinate)\n (0.01, 0.05, 0.25, 0.75, 0.95, 0.99)') ,'FontSize',14, 'fontweight','bold')
+title(sprintf(strjust('Constant Drift MLE Quantile (estimates for one coordinate)\n(0.01, 0.05, 0.25, 0.75, 0.95, 0.99)'),'center'),'FontSize',14, 'fontweight','bold')
 xlabel('Time')
 
 if (saveEstimations)
@@ -314,7 +314,7 @@ quantiles = [0.01,0.99, 0.05, 0.95,0.25,0.75];
 bounds = abs(quantile(squeeze(theta_hat_transformed)',quantiles) - theta_OU);
 [l,p] = boundedline(xaxis,repmat(theta_OU*ones(size(xaxis))',length(quantiles)/2,1), reshape(bounds',[length(xaxis),2,length(quantiles)/2]),'cmap',cool(length(quantiles)/2));
 outlinebounds(l,p);
-title(sprintf('OU Drift MLE Quantiles\n (0.01, 0.05, 0.25, 0.75, 0.95, 0.99)'),'FontSize',14, 'fontweight','bold')
+title(strjust(sprintf('OU Drift MLE Quantiles\n(0.01, 0.05, 0.25, 0.75, 0.95, 0.99)'),'center'),'FontSize',14, 'fontweight','bold')
 xlabel('Time')
 
 if (saveEstimations)
@@ -351,10 +351,11 @@ plot(xaxis,squeeze(theta_hat_transformed(1,2:end,:)),'LineSmoothing','on')
 
 
 hold on
-plot(xaxis,theta_LA(2),'r.','LineWidth',2,'LineSmoothing','on')
+plot(xaxis,theta_LA(2),'r-','LineWidth',2)
 title('Area Coefficient MLE','FontSize',14, 'fontweight','bold')
 xlabel('Time')
 hold off
+ylim([-50,50])
 
 if (saveEstimations)
     saveas(gcf,fullfile(results_path,'LA_theta_hat_area.fig'))
@@ -371,7 +372,7 @@ quantiles = [0.01,0.99, 0.05, 0.95,0.25,0.75];
 bounds = abs(quantile(squeeze(theta_hat_transformed(1,2:end,:))',quantiles) - theta_LA(2));
 [l,p] = boundedline(xaxis,repmat(theta_LA(2)*ones(size(xaxis))',length(quantiles)/2,1), reshape(bounds',[length(xaxis),2,length(quantiles)/2]),'cmap',cool(length(quantiles)/2));
 outlinebounds(l,p);
-title(sprintf('Area Coefficient MLE Quantiles\n  (0.01, 0.05, 0.25, 0.75, 0.95, 0.99)'),'FontSize',14, 'fontweight','bold')
+title(strjust(sprintf('Area Coefficient MLE Quantiles\n(0.01, 0.05, 0.25, 0.75, 0.95, 0.99)'),'center'),'FontSize',14, 'fontweight','bold')
 xlabel('Time')
 
 if (saveEstimations)
@@ -392,7 +393,7 @@ hold on
 plot(xaxis,theta_LA(1)*ones(size(xaxis)),'r-','LineWidth',2)
 title('Length Coefficient MLE','FontSize',14, 'fontweight','bold')
 xlabel('Time')
-
+ylim([-0.3,0.5])
 
 if (saveEstimations)
     saveas(gcf,fullfile(results_path,'LA_theta_hat_length.fig'))
@@ -411,8 +412,9 @@ quantiles = [0.01,0.99, 0.05, 0.95,0.25,0.75];
 bounds = abs(quantile(squeeze(theta_hat_transformed(2,2:end,:))',quantiles) - theta_LA(1));
 [l,p] = boundedline(xaxis,repmat(theta_LA(1)*ones(size(xaxis))',length(quantiles)/2,1), reshape(bounds',[length(xaxis),2,length(quantiles)/2]),'cmap',cool(length(quantiles)/2));
 outlinebounds(l,p);
-title(sprintf('Length Coefficient MLE Quantiles \n (0.01, 0.05, 0.25, 0.75, 0.95, 0.99)'),'FontSize',14, 'fontweight','bold')
+title(strjust(sprintf('Length Coefficient MLE Quantiles\n(0.01, 0.05, 0.25, 0.75, 0.95, 0.99)'),'center'),'FontSize',14, 'fontweight','bold')
 xlabel('Time')
+ylim([-0.3,0.5])
 
 if (saveEstimations)
     saveas(gcf,fullfile(results_path,'LA_theta_hat_length_qb.fig'))
